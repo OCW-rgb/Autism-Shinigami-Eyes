@@ -1,0 +1,81 @@
+name: uno-complete
+description: >
+  On-device facial-expression recognition for the Arduino Uno Q. Full-frame
+  camera / still-image input is scored by the FANE ResNet18 model (the michael
+  chen lexfm0.pt checkpoint, ported into uno-complete/) and produces a
+  plain-language explanation + suggested response. Inference runs locally on the
+  Linux MPU (ONNX, TorchScript, or native PyTorch). Optional cloud Tinker social
+  coach receives the current and previous frame so it can track expression
+  changes over time. Optional MCU companion sketch drives the onboard LED.
+icon: 🙂
+version: "1.0.0"
+ports: []
+bricks: []
+
+# User-configurable parameters surfaced by Arduino App Lab.
+# Each entry maps one-to-one to a `python/live_explain.py` CLI argument.
+# App Lab injects these values into the app at runtime; CLI flags still override.
+config:
+  - name: source
+    type: string
+    default: "0"
+    description: >
+      Camera source: webcam index (e.g. "0"), an rtsp:///http:// stream URL,
+      or a still-image file path.
+  - name: backend
+    type: enum
+    enum: [auto, onnx, torch, pytorch]
+    default: "auto"
+    description: >
+      Inference backend: auto (onnx if available, else torch), onnx
+      (bundled fane_resnet18_float32.onnx), torch (bundled
+      fane_resnet18_float32.pt TorchScript), or pytorch (native
+      uno-complete/ lexfm0.pt checkpoint in PyTorch).
+  - name: tinker-checkpoint
+    type: string
+    default: ""
+    description: >
+      tinker:// sampler_path of the LoRA social coach. Empty = auto-detect
+      newest tinker-verbalizer run. Requires TINKER_API_KEY + network.
+  - name: tinker-runs-root
+    type: string
+    default: ""
+    description: >
+      Directory that contains tinker-verbalizer/runs. Empty = app folder.
+  - name: no-tinker
+    type: boolean
+    default: false
+    description: >
+      Skip the cloud Tinker social coach; use built-in fixed templates only.
+  - name: interval
+    type: number
+    default: 10.0
+    minimum: 1
+    description: >
+      Seconds between classifications (default 10s so frames do not pile up).
+  - name: save-frames
+    type: string
+    default: ""
+    description: >
+      Folder to save each analyzed frame into (created if missing). Empty =
+      frame saving disabled.
+  - name: max-frames
+    type: integer
+    default: -1
+    description: >
+      Stop after this many classified frames. -1 = run forever.
+  - name: one-shot
+    type: boolean
+    default: false
+    description: >
+      Classify a single frame and exit (useful for still images / testing).
+  - name: show
+    type: boolean
+    default: false
+    description: >
+      Show an annotated OpenCV window (needs GUI OpenCV + a display).
+  - name: no-bridge
+    type: boolean
+    default: false
+    description: >
+      Do not signal the MCU over the Bridge (onboard LED disabled).

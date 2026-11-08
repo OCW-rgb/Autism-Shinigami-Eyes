@@ -1,0 +1,22 @@
+# Python dependencies for the uno-q-live app (Linux MPU, aarch64).
+# Install ON THE BOARD (or on any host for a smoke test):
+#   pip install -r requirements.txt
+#
+# onnxruntime ships aarch64 CPU wheels and is the preferred backend
+# (~15 MB install). torch also works (--backend torch) but is much larger.
+# opencv-python-headless: no display on the MPU; use GUI opencv only if you
+# need --show on a machine with a display.
+onnxruntime>=1.17
+opencv-python-headless>=4.8,<5
+numpy>=1.26
+# Pillow: EXIF-transpose / aspect-preserving gray pad matching FANE ResNet18 training.
+pillow>=10
+
+# Optional, only for the cloud social coach (NOT recommended on the board;
+# see README.md "The Tinker social coach on the Uno Q"):
+#   pip install tinker
+# plus TINKER_API_KEY in the environment, and network access.
+# tinker-cookbook is NOT required. The default path needs none of this.
+
+# Optional, only for --backend torch (bundled TorchScript in assets/):
+# torch>=2.2

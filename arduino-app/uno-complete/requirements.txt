@@ -1,0 +1,8 @@
+# Python dependencies for the michael chen ResNet18 model runner (uno-complete).
+# Install in a venv:
+#   python3 -m venv .venv
+#   source .venv/bin/activate
+#   pip install -r requirements.txt
+torch
+numpy
+pillow

@@ -1,0 +1,13 @@
+{
+  "source": "0",
+  "backend": "auto",
+  "tinker-checkpoint": "",
+  "tinker-runs-root": "",
+  "no-tinker": false,
+  "interval": 10.0,
+  "save-frames": "",
+  "max-frames": -1,
+  "one-shot": false,
+  "show": false,
+  "no-bridge": false
+}
